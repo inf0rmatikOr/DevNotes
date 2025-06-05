@@ -70,7 +70,7 @@
                     <div class="flex flex-col">
                         <input class="text-white outline-none text-3xl font-medium" type="text" bind:value={currentNote.title}>
                         <div class="mt-4 h-[calc(100vh-4.3rem-3.5rem)] w-full overflow-hidden">
-                            <LineEditor content={currentNote.content}/>
+                            <LineEditor bind:content={currentNote.content}/>
                         </div>
                     </div>  
                 {/if}
