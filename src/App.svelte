@@ -3,14 +3,14 @@
     import FlyIn from "./lib/FlyIn.svelte";
     import Header from "./lib/Header.svelte";
     import Editor from "./lib/TextEditor.svelte";
-    import { notes, route } from "./lib/stores";
+    import { notes, route, settings } from "./lib/stores";
     import type { Note } from "./lib/types";
     import KiChat from "./lib/routes/KIChat.svelte";
+    import Settings from "./lib/routes/Settings.svelte";
 
     let currentNote: Note = { id: "", title: "", content: "", createdAt: new Date(), updatedAt: new Date() };
     let usernotes = $notes;
     let searchValue = "";
-    let isLoading = false;
 
     function addNote() {
         let newNote: Note = {
@@ -40,13 +40,23 @@
     onMount(() => {
         if (localStorage.getItem("notes")) {
             const savedNotes = JSON.parse(localStorage.getItem("notes") || "[]");
-            if (Array.isArray(savedNotes) && savedNotes.every(note => note.id && note.title && note.content)) {
-                savedNotes.forEach(note => {
-                    note.createdAt = new Date(note.createdAt);
-                    note.updatedAt = new Date(note.updatedAt);
-                });
-            }
+            savedNotes.forEach((note: Note) => {
+                note.createdAt = new Date(note.createdAt);
+                note.updatedAt = new Date(note.updatedAt);
+            });
             notes.set(savedNotes);
+        }
+
+        const savedSettings = localStorage.getItem("settings");
+        if (savedSettings) {
+            const parsedSettings: Settings = JSON.parse(savedSettings);
+            settings.set({
+                apiKey: parsedSettings.apiKey || "",
+                textColor: parsedSettings.textColor || "#ffffff",
+                backgroundColor: parsedSettings.backgroundColor || "#000000",
+                showNumbers: parsedSettings.showNumbers !== undefined ? parsedSettings.showNumbers : true,
+                rounded: parsedSettings.rounded !== undefined ? parsedSettings.rounded : false
+            });
         }
     })
 
@@ -74,7 +84,7 @@
     <Header />
     <div class="flex">
         <!-- Sidebar -->
-        {#if $route !== "KI Chat" && $route !== "Settings"}
+        {#if $route !== "AI Chat" && $route !== "Settings"}
             <div class="w-56 h-[calc(100vh-4.3rem)] px-4">
                 <h1 class="text-white text-xl">{$route}</h1>
                 {#if $route === "Notes"}
@@ -107,18 +117,20 @@
         {/if}
         
         <!-- Main Content -->
-        <div class="{$route !== "KI Chat" ? "w-[calc(100vw-14rem)] ml-2" : "w-full" } h-[calc(100vh-4.3rem)]">
+        <div class="{$route !== "AI Chat" && $route !== "Settings" ? "w-[calc(100vw-14rem)] ml-2" : "w-full" } h-[calc(100vh-4.3rem)]">
             {#if $route === "Notes"}
                 {#if currentNote.id !== ""}
                     <div class="flex flex-col">
                         <input onchange={updateNote} class="text-white outline-none text-3xl font-medium" type="text" bind:value={currentNote.title}>
                         <div class="mt-4 h-[calc(100vh-4.3rem-3.5rem)] w-full overflow-hidden pr-4">
-                            <Editor on:change={updateNote} bind:content={currentNote.content}/>
+                            <Editor backgroundcolor={$settings.backgroundColor} showNumbers={$settings.showNumbers} rounded={$settings.rounded} textcolor={$settings.textColor} on:change={updateNote} bind:content={currentNote.content}/>
                         </div>
                     </div>  
                 {/if}
-            {:else if $route === "KI Chat"}
-                <KiChat />
+            {:else if $route === "AI Chat"}
+                <KiChat key={$settings.apiKey} />
+            {:else if $route === "Settings"}
+                <Settings />
             {/if}
         </div>
     </div>

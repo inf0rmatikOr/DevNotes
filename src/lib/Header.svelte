@@ -5,12 +5,12 @@
 </script>
 
 <div class="flex justify-between items-center p-4 w-full">
-    <h1 class="text-white text-3xl font-semibold">DevNotes</h1>
+    <h1 class="text-purple-600 text-3xl font-semibold">DevNotes</h1>
     <div class="flex gap-x-8 items-center justify-center w-full">
         <button onclick={() => route.set("Notes")} class="h-7 outline-none cursor-pointer transition-all {$route === "Notes" ? "px-4 rounded-full bg-white" : "text-neutral-400"}">Notes</button>
         <button onclick={() => route.set("Calender")} class="h-7 outline-none  cursor-pointer transition-all {$route === "Calender" ? "px-4 rounded-full bg-white" : "text-neutral-400"}">Calender</button>
         <button onclick={() => route.set("API Client")} class="h-7 outline-none  cursor-pointer transition-all text-nowrap {$route === "API Client" ? "px-4 rounded-full bg-white" : "text-neutral-400"}">API Client</button>
-        <button onclick={() => route.set("KI Chat")} class="h-7 outline-none cursor-pointer transition-all text-nowrap {$route === "KI Chat" ? "px-4 rounded-full bg-white" : "text-neutral-400"}">KI Chat</button>
+        <button onclick={() => route.set("AI Chat")} class="h-7 outline-none cursor-pointer transition-all text-nowrap {$route === "AI Chat" ? "px-4 rounded-full bg-white" : "text-neutral-400"}">AI Chat</button>
     </div>
     <div class="flex justify-end items-center h-full ">
         <button onclick={() => route.set("Settings")} class="text-neutral-400 cursor-pointer hover:text-neutral-300 transition-all" aria-label="settings">

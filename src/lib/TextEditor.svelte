@@ -5,6 +5,7 @@
     export let showNumbers = true;
     export let textcolor = "#ffffff";
     export let backgroundcolor = "#000000";
+    export let rounded = true;
     let lines = 0;
   
     $: lines = content.split('\n').length;
@@ -21,7 +22,7 @@
     onMount(() => syncNumberScroll);
 </script>
   
-<div style="background-color: {backgroundcolor};" class="h-full w-full overflow-hidden">
+<div style="background-color: {backgroundcolor};" class="h-full w-full overflow-hidden {rounded ? 'rounded-lg' : ''} py-2">
     <div class="flex h-full">
         {#if showNumbers}
             <div class="w-10 h-full overflow-hidden" bind:this={numberDiv}>

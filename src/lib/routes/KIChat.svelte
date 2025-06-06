@@ -1,9 +1,9 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import Message from "../Message.svelte"
-    import { API_KEY } from "../config";
     import { messages } from "../stores";
 
+    export let key = ""
     let prompt = ""
     let isloading = false
     let chat_history: string[] = []
@@ -18,7 +18,7 @@
         chat_history.push(userprompt)
         current_history_index = chat_history.length
         prompt = ""
-        await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`, {
+        await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`, {
             method: "Post",
             headers: {
                 "Content-Type": "application/json"
@@ -49,11 +49,14 @@
     }; 
 
     onMount(() => {
-        scrollToBottom();
+        if (!key) return
+        scrollToBottom()
     });
 
     function handleKeyDown(event: KeyboardEvent) {
         if (event.key === "ArrowUp") {
+            if (chat_history.length === 0) return
+
             if (current_history_index === 0) {
                 current_history_index = chat_history.length;
             }
@@ -73,11 +76,17 @@
 
 <div class="w-full h-full">
     <div class="w-full h-[80%] text-white">
-        <div bind:this={msgDiv} class="flex flex-col overflow-x-scroll gap-y-4 w-full h-full items-center max-w-2xl mx-auto">
-            {#each $messages as message}
-                <Message role={message.role} content={message.content} />
-            {/each}
-        </div>
+        {#if key}
+            <div bind:this={msgDiv} class="flex flex-col overflow-x-scroll gap-y-4 w-full h-full items-center max-w-2xl mx-auto">
+                {#each $messages as message}
+                    <Message role={message.role} content={message.content} />
+                {/each}
+            </div>
+        {:else}
+            <div class="flex justify-center items-center h-full">
+                <h1 class="text-2xl text-white">Please enter your API key in the settings</h1>
+            </div>
+        {/if}
     </div>
     <div class="flex flex-col justify-center items-center w-full h-[20%] max-w-3xl mx-auto">
         {#if isloading}
@@ -87,9 +96,11 @@
                 <div class='h-2 w-2 bg-black rounded-full animate-bounce'></div>
             </div>
         {/if}
-        <form on:submit|preventDefault={google} class="flex w-full mt-4">
-            <input bind:this={input} on:keydown={handleKeyDown} bind:value={prompt} type="text" placeholder="Prompt" class="rounded-lg border resize-none border-neutral-600 px-4 py-2 w-full text-white outline-none">
-            <button type="submit" class="bg-indigo-600 cursor-pointer text-white px-4 py-2 rounded-lg ml-2 hover:bg-indigo-700 transition-all">Send</button>
-        </form>
+        {#if key}
+            <form on:submit|preventDefault={google} class="flex w-full mt-4">
+                <input bind:this={input} on:keydown={handleKeyDown} bind:value={prompt} type="text" placeholder="Prompt" class="rounded-lg border resize-none border-neutral-600 px-4 py-2 w-full text-white outline-none">
+                <button type="submit" class="bg-indigo-600 cursor-pointer text-white px-4 py-2 rounded-lg ml-2 hover:bg-indigo-700 transition-all">Send</button>
+            </form>
+        {/if}
     </div>
 </div>
