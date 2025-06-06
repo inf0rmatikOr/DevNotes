@@ -27,6 +27,6 @@
                 </div>
             {/each}
         </div>
-        <textarea onkeydown={syncNumberScroll} spellcheck="false" class="overflow-hidden resize-none w-full outline-none text-white pl-2" bind:value={content} bind:this={textarea}></textarea>
+        <textarea on:change on:keydown={syncNumberScroll} spellcheck="false" class="overflow-hidden resize-none w-full outline-none text-white pl-2" bind:value={content} bind:this={textarea}></textarea>
     </div>
 </div>

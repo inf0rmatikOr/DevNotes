@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
+::-webkit-scrollbar {
+    display: none;
+}
