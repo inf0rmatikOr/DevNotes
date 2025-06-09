@@ -91,7 +91,7 @@
             </div>
             <div class="w-full h-full mt-6">
                 {#if status != ""}
-                    <TextEditor content={response}/>
+                    <TextEditor isDisabled={true} content={response}/>
                 {/if}
             </div>
         </div>
