@@ -6,6 +6,7 @@
     export let textcolor = "#ffffff";
     export let backgroundcolor = "#000000";
     export let rounded = true;
+    export let isDisabled = false;
     let lines = 0;
   
     $: lines = content.split('\n').length;
@@ -33,6 +34,10 @@
                 {/each}
             </div>
         {/if}
-        <textarea style="color: {textcolor};" on:change on:keydown={syncNumberScroll} spellcheck="false" class="overflow-hidden resize-none w-full outline-none pl-2" bind:value={content} bind:this={textarea}></textarea>
+        {#if isDisabled}
+            <textarea disabled style="color: {textcolor};" on:change on:keydown={syncNumberScroll} spellcheck="false" class="overflow-hidden resize-none w-full outline-none pl-2" bind:value={content} bind:this={textarea}></textarea>
+        {:else}
+            <textarea style="color: {textcolor};" on:change on:keydown={syncNumberScroll} spellcheck="false" class="overflow-hidden resize-none w-full outline-none pl-2" bind:value={content} bind:this={textarea}></textarea>
+        {/if}
     </div>
 </div>

@@ -1,9 +1,10 @@
 import { app, BrowserWindow } from 'electron/main'
+import { ipcMain } from 'electron'
 
 function createWindow () {
   const win = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 1400,
+    height: 900,
     autoHideMenuBar: true,
   })
 
