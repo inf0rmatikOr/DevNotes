@@ -45,7 +45,7 @@
         <h1 class="text-2xl text-white font-semibold mb-4">AI Chat</h1>
         <p class="text-sm text-neutral-500">Documentation: <span class="text-cyan-600">https://ai.google.dev/gemini-api/docs/api-key</span></p>
         <input bind:value={key} type="password" class="w-full mt-4 h-10 px-4 border border-neutral-800 text-white rounded outline-none" placeholder="API Key" />
-        <h1 class="text-2xl text-white font-semibold mb-4 mt-4">Editor</h1>
+        <h1 class="text-2xl text-white font-semibold mb-4 mt-4">Notes Editor</h1>
         <div class="flex items-center">
             <div class="inline-flex items-center">
                 <label class="flex items-center cursor-pointer relative">

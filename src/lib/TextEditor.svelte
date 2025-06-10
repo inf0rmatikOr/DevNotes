@@ -5,8 +5,9 @@
     export let showNumbers = true;
     export let textcolor = "#ffffff";
     export let backgroundcolor = "#000000";
-    export let rounded = true;
+    export let rounded = false;
     export let isDisabled = false;
+    export let customClass = "";
     let lines = 0;
   
     $: lines = content.split('\n').length;
@@ -23,7 +24,7 @@
     onMount(() => syncNumberScroll);
 </script>
   
-<div style="background-color: {backgroundcolor};" class="h-full w-full overflow-hidden {rounded ? 'rounded-lg' : ''} py-2">
+<div style="background-color: {backgroundcolor};" class="h-full w-full overflow-hidden {customClass} {rounded ? 'rounded-lg' : ''} py-2">
     <div class="flex h-full">
         {#if showNumbers}
             <div class="w-10 h-full overflow-hidden" bind:this={numberDiv}>
@@ -35,9 +36,9 @@
             </div>
         {/if}
         {#if isDisabled}
-            <textarea disabled style="color: {textcolor};" on:change on:keydown={syncNumberScroll} spellcheck="false" class="overflow-hidden resize-none w-full outline-none pl-2" bind:value={content} bind:this={textarea}></textarea>
+            <textarea disabled style="color: {textcolor};" on:keypress on:change on:keydown={syncNumberScroll} spellcheck="false" class="overflow-hidden resize-none w-full outline-none pl-2" bind:value={content} bind:this={textarea}></textarea>
         {:else}
-            <textarea style="color: {textcolor};" on:change on:keydown={syncNumberScroll} spellcheck="false" class="overflow-hidden resize-none w-full outline-none pl-2" bind:value={content} bind:this={textarea}></textarea>
+            <textarea style="color: {textcolor};" on:keypress on:change on:keydown={syncNumberScroll} spellcheck="false" class="overflow-hidden resize-none w-full outline-none pl-2" bind:value={content} bind:this={textarea}></textarea>
         {/if}
     </div>
 </div>
