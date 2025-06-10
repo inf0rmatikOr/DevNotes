@@ -8,6 +8,7 @@
     import KiChat from "./lib/routes/KIChat.svelte";
     import Settings from "./lib/routes/Settings.svelte";
     import ApiClient from "./lib/routes/APIClient.svelte";
+    import Calender from "./lib/routes/Calender.svelte";
 
     let currentNote: Note = { id: "", title: "", content: "", createdAt: new Date(), updatedAt: new Date() };
     let usernotes = $notes;
@@ -85,7 +86,7 @@
     <Header />
     <div class="flex">
         <!-- Sidebar -->
-        {#if $route !== "AI Chat" && $route !== "Settings" && $route !== "API Client"}
+        {#if $route === "Notes"}
             <div class="w-56 h-[calc(100vh-4.3rem)] px-4">
                 <h1 class="text-white text-xl">{$route}</h1>
                 {#if $route === "Notes"}
@@ -118,7 +119,7 @@
         {/if}
         
         <!-- Main Content -->
-        <div class="{$route !== "AI Chat" && $route !== "Settings" && $route !== "API Client" ? "w-[calc(100vw-14rem)] ml-2" : "w-full" } h-[calc(100vh-4.3rem)]">
+        <div class="{$route === "Notes" ? "w-[calc(100vw-14rem)] ml-2" : "w-full" } h-[calc(100vh-4.3rem)]">
             {#if $route === "Notes"}
                 {#if currentNote.id !== ""}
                     <div class="flex flex-col">
@@ -134,6 +135,8 @@
                 <Settings />
             {:else if $route === "API Client"}
                 <ApiClient />
+            {:else if $route === "Calender"}
+                <Calender />
             {/if}
         </div>
     </div>
