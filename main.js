@@ -8,13 +8,10 @@ function createWindow () {
     autoHideMenuBar: true
   })
 
-  win.webContents.openDevTools()
+  //win.webContents.openDevTools()
 
-  if (process.env.NODE_ENV === 'development') {
-    win.loadURL('http://localhost:5173')
-  } else {
-    win.loadFile(path.join(__dirname, './ui/dist/index.html'))
-  }
+  win.loadURL('http://localhost:5173')
+  //win.loadFile(path.join(__dirname, './ui/dist/index.html'))
 }
 
 app.whenReady().then(() => {
