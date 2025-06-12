@@ -63,6 +63,7 @@
     })
 
     function updateNote() {
+        currentNote.updatedAt = new Date();
         notes.update(n => n.map(note => note.id === currentNote.id ? currentNote : note));
         localStorage.setItem("notes", JSON.stringify($notes));
     }

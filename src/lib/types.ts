@@ -18,3 +18,9 @@ export type Settings = {
     rounded: boolean;
     showNumbers: boolean;
 }
+
+export type CalenderEntry = {
+    date: Date;
+    content: string;
+    time: string;
+}
