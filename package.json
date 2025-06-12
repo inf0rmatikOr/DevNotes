@@ -1,16 +1,27 @@
 {
   "name": "devnotes",
+  "productName": "DevNotes",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
+  "build": {
+    "productName": "DevNotes",
+    "artifactName": "DevNotes_Setup.${ext}",
+    "asar": false
+  },
   "scripts": {
     "app": "electron .",
+    "build:win": "electron-builder --win",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "electron": "^36.4.0"
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "electron": "^36.4.0",
+    "electron-builder": "^26.0.12"
+  },
+  "overrides": {
+    "minimatch": "10.0.1"
   }
 }
