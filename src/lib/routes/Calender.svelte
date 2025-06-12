@@ -58,6 +58,15 @@
     $: {
         localStorage.setItem("calenderEntries", JSON.stringify(calenderEntries));
     }
+
+    function sortAfterTime() {
+        calenderEntries.sort((a, b) => {
+            const timeA = a.time ? new Date(`1970-01-01T${a.time}:00`) : new Date(0);
+            const timeB = b.time ? new Date(`1970-01-01T${b.time}:00`) : new Date(0);
+            return timeA.getTime() - timeB.getTime();
+        });
+        restart = {}
+    }
 </script>
 
 <div class="w-full h-full">
@@ -97,7 +106,7 @@
                                             <div class="w-[94%] h-auto flex flex-col group mx-auto mb-2 p-2 bg-blue-900 rounded text-white">
                                                 <input spellcheck="false" class="outline-none h-8 truncate" bind:value={entry.content}>
                                                 <div class="flex justify-between mt-2">
-                                                    <input bind:value={entry.time} type="time" class="w-24 rounded-full h-6 px-2 bg-indigo-600 outline-none">
+                                                    <input on:change={sortAfterTime} bind:value={entry.time} type="time" class="w-24 rounded-full h-6 px-2 bg-indigo-600 outline-none">
                                                     <button on:click={() => calenderEntries = calenderEntries.filter(e => e !== entry)} aria-label="delete_entry" class="text-red-500 ml-auto cursor-pointer hover:text-red-700 transition-all">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="red"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
                                                     </button>
