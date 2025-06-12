@@ -1,0 +1,36 @@
+name: Data Gateway
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+    build-to-exe:
+        runs-on: windows-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Setup node
+              uses: actions/setup-node@v4
+            
+              with:
+                node-version: 'lts/*'
+            
+            - name: Install dependencies for electron
+              run: npm install
+            
+            - name: Install web app
+              run: cd ui && npm install
+
+            - name: Build web app
+              run: npm run build
+
+            - name: Build setup.exe
+              run: cd .. && npm run build:win
+
+            - name: Release
+              uses: softprops/action-gh-release@v1
+              with:
+                files: dist/DevNotes_Setup.exe

@@ -10,8 +10,8 @@ function createWindow () {
 
   //win.webContents.openDevTools()
 
-  win.loadURL('http://localhost:5173')
-  //win.loadFile(path.join(__dirname, './ui/dist/index.html'))
+  // win.loadURL('http://localhost:5173')
+  win.loadFile(path.join(__dirname, './ui/dist/index.html'))
 }
 
 app.whenReady().then(() => {
