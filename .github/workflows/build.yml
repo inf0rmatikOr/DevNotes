@@ -1,4 +1,4 @@
-name: Data Gateway
+name: DevNotes
 
 on:
   push:
