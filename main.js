@@ -1,22 +1,20 @@
-import { app, BrowserWindow } from 'electron/main'
-import { ipcMain } from 'electron'
-import fetch from 'node-fetch'
-
-const __dirname = import.meta.dirname
+const { app, BrowserWindow } = require('electron/main')
+const path = require('path')
 
 function createWindow () {
   const win = new BrowserWindow({
     width: 1400,
     height: 900,
-    autoHideMenuBar: true,
-    webPreferences: {
-      preload: __dirname + '/preload.js',
-    }
+    autoHideMenuBar: true
   })
 
   win.webContents.openDevTools()
 
-  win.loadURL("http://localhost:5173")
+  if (process.env.NODE_ENV === 'development') {
+    win.loadURL('http://localhost:5173')
+  } else {
+    win.loadFile(path.join(__dirname, './ui/dist/index.html'))
+  }
 }
 
 app.whenReady().then(() => {
