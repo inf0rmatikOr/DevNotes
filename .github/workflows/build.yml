@@ -25,10 +25,10 @@ jobs:
               run: cd ui && npm install
 
             - name: Build web app
-              run: npm run build
+              run: cd ui && npm run build
 
             - name: Build setup.exe
-              run: cd .. && npm run build:win
+              run: npm run build:win
 
             - name: Release
               uses: softprops/action-gh-release@v1
