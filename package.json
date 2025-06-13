@@ -7,7 +7,7 @@
   "build": {
     "productName": "DevNotes",
     "artifactName": "DevNotes_Setup.${ext}",
-    "asar": false
+    "asar": true
   },
   "scripts": {
     "app": "electron .",
@@ -20,8 +20,5 @@
   "devDependencies": {
     "electron": "^36.4.0",
     "electron-builder": "^26.0.12"
-  },
-  "overrides": {
-    "minimatch": "10.0.1"
   }
 }
