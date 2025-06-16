@@ -11,10 +11,12 @@ function createWindow () {
     }
   })
 
-  win.webContents.openDevTools()
+  // Development mode options:
+  // win.webContents.openDevTools()
+  // win.loadURL('http://localhost:5173')
 
-  win.loadURL('http://localhost:5173')
-  // win.loadFile(path.join(__dirname, './ui/dist/index.html'))
+  // Production mode options:
+  win.loadFile(path.join(__dirname, './ui/dist/index.html'))
 }
 
 app.whenReady().then(() => {
