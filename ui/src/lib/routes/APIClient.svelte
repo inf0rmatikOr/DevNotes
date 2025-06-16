@@ -36,44 +36,25 @@
             return;
         }
 
-        // const res = await window.api.fetch(url, {
-        //     method: method,
-        //     headers: Object.fromEntries(headerKeys.map((key, index) => [key, headerValues[index]])),
-        //     body: method === "GET" ? undefined : bodyContent ? JSON.stringify(JSON.parse(bodyContent)) : undefined
-        // });
-        // console.log(res)
-
-        await fetch(url, {
+        const res = await window.api.fetch(url, {
             method: method,
-            headers: {
-                ...Object.fromEntries(headerKeys.map((key, index) => [key, headerValues[index]]))
-            },
+            headers: Object.fromEntries(headerKeys.map((key, index) => [key, headerValues[index]])),
             body: method === "GET" ? undefined : bodyContent ? JSON.stringify(JSON.parse(bodyContent)) : undefined
-        }).then((data) => {
-            time = new Date().getTime() - timeNow;
-            status = data.status.toString();
-            statustext = data.statusText;
-            data.text().then((text: any) => {
-                size = new TextEncoder().encode(text).length;
-                if (size > 1024) {
-                    inBytes = false;
-                    size = parseFloat((size / 1024).toFixed(2));
-                }
-                try {
-                    response = JSON.stringify(JSON.parse(text), null, 2);
-                } catch (e) {
-                    response = text;
-                    return;
-                }
-            });
+        });
 
-        }).catch((error) => {
-            status = "ERROR";
-            statustext = error.message;
-            time = 0
-            size = 0;
-        })
-
+        time = new Date().getTime() - timeNow;
+        status = res.status;
+        statustext = res.statusText;
+        size = new TextEncoder().encode(res.data).length;
+        if (size > 1024) {
+            inBytes = false;
+            size = parseFloat((size / 1024).toFixed(2));
+        }
+        try {
+            response = JSON.stringify(JSON.parse(res.data), null, 2);
+        } catch (e) {
+            response = res.data;
+        }
     }
 
     function addHeader() {
