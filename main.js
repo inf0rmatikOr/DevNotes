@@ -1,17 +1,20 @@
-const { app, BrowserWindow } = require('electron/main')
+const { app, BrowserWindow, ipcMain } = require('electron/main')
 const path = require('path')
 
 function createWindow () {
   const win = new BrowserWindow({
     width: 1400,
     height: 900,
-    autoHideMenuBar: true
+    autoHideMenuBar: true,
+    webPreferences: {
+      preload: path.join(__dirname, './preload.js')
+    }
   })
 
-  //win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
-  // win.loadURL('http://localhost:5173')
-  win.loadFile(path.join(__dirname, './ui/dist/index.html'))
+  win.loadURL('http://localhost:5173')
+  // win.loadFile(path.join(__dirname, './ui/dist/index.html'))
 }
 
 app.whenReady().then(() => {
@@ -24,13 +27,26 @@ app.whenReady().then(() => {
   })
 })
 
-// ipcMain.handle("api-fetch", async (event, url, opts) => {
-//   const response = await fetch(url, opts)
+ipcMain.handle("api-fetch", async (event, url, opts) => {
+  const response = await fetch(url, opts)
+  const data = await response.text()
 
-//   // TODO: make right
+  if (!response.ok) {
+    return {
+      status: response.status.toString(),
+      statusText: response.statusText,
+      headers: Object.fromEntries(response.headers.entries()),
+      data: response.message || 'An error occurred.'
+    }
+  }
 
-//   return response
-// })
+  return {
+    status: response.status.toString(),
+    statusText: response.statusText,
+    headers: Object.fromEntries(response.headers.entries()),
+    data: data
+  }
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
