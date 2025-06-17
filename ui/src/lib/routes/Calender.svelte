@@ -67,6 +67,12 @@
         });
         restart = {}
     }
+
+    let currentColumn: Date;
+
+    function setCurrentColumn(date: Date) {
+        currentColumn = date;
+    }
 </script>
 
 <div class="w-full h-full">
@@ -99,7 +105,9 @@
                                     {date.toLocaleDateString('de-DE', { weekday: 'short' })}
                                 </span>
                             </div> 
-                            <div class="h-full w-full py-4 group border-b-2 {index === 6 ? "border-l border-r-2 rounded-br-lg" : ""} {index === 0 ? "border-r border-l-2 rounded-bl-lg" : ""} {index !== 0 && index !== 6 ? "border-x" : "" } border-neutral-700">
+                            <!-- svelte-ignore a11y_mouse_events_have_key_events -->
+                            <!-- svelte-ignore a11y_no_static_element_interactions -->
+                            <div on:mouseover={() => setCurrentColumn(date)} class="h-full w-full py-4 group border-b-2 {index === 6 ? "border-l border-r-2 rounded-br-lg" : ""} {index === 0 ? "border-r border-l-2 rounded-bl-lg" : ""} {index !== 0 && index !== 6 ? "border-x" : "" } border-neutral-700">
                                 {#key restart}
                                     {#each calenderEntries as entry}
                                         {#if entry.date.toLocaleDateString() === date.toLocaleDateString()}

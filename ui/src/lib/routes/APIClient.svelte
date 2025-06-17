@@ -119,9 +119,9 @@
         </div>
         <div class="border-l border-neutral-700 h-full px-4 w-1/2 overflow-auto">
             <div class="flex gap-x-4 fixed bg-black">
-                <h2 class="text-white text-lg">Status: <span class="{status.startsWith("3") ? "text-yellow-500" : ""} {status.startsWith("2") ? "text-lime-500" : ""} {status.startsWith("4") ? "text-red-500" : ""} {status.startsWith("ERROR") ? "text-red-500" : ""} font-medium">{status}</span>
+                <h2 class="text-white text-lg">Status: <span class="{status.startsWith("3") ? "text-yellow-500" : ""} {status.startsWith("2") ? "text-lime-500" : ""} {status.startsWith("4") ? "text-red-500" : ""} {status.startsWith("ERROR") ? "text-red-500" : ""} {status.startsWith("5") ? "text-red-500" : ""} font-medium">{status}</span>
                 {#if statustext}
-                    <span class="{status.startsWith("3") ? "text-yellow-500" : ""} {status.startsWith("2") ? "text-lime-500" : ""} {status.startsWith("4") ? "text-red-500" : ""} {status.startsWith("ERROR") ? "text-red-500" : ""} font-medium">{statustext}</span>
+                    <span class="{status.startsWith("3") ? "text-yellow-500" : ""} {status.startsWith("2") ? "text-lime-500" : ""} {status.startsWith("4") ? "text-red-500" : ""} {status.startsWith("ERROR") ? "text-red-500" : ""} {status.startsWith("5") ? "text-red-500" : ""} font-medium">{statustext}</span>
                 {/if}
                 </h2>
                 <h2 class="text-white text-lg">Size:

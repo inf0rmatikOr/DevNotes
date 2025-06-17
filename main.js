@@ -12,11 +12,11 @@ function createWindow () {
   })
 
   // Development mode options:
-  // win.webContents.openDevTools()
-  // win.loadURL('http://localhost:5173')
+  win.webContents.openDevTools()
+  win.loadURL('http://localhost:5173')
 
   // Production mode options:
-  win.loadFile(path.join(__dirname, './ui/dist/index.html'))
+  // win.loadFile(path.join(__dirname, './ui/dist/index.html'))
 }
 
 app.whenReady().then(() => {
@@ -30,23 +30,32 @@ app.whenReady().then(() => {
 })
 
 ipcMain.handle("api-fetch", async (event, url, opts) => {
-  const response = await fetch(url, opts)
-  const data = await response.text()
+  try {
+    const response = await fetch(url, opts)
+    const data = await response.text()
 
-  if (!response.ok) {
+    if (!response.ok) {
+      return {
+        status: response.status.toString(),
+        statusText: response.statusText,
+        headers: Object.fromEntries(response.headers.entries()),
+        data: response.message || 'An error occurred.'
+      }
+    }
+
     return {
       status: response.status.toString(),
       statusText: response.statusText,
       headers: Object.fromEntries(response.headers.entries()),
-      data: response.message || 'An error occurred.'
+      data: data
     }
-  }
-
-  return {
-    status: response.status.toString(),
-    statusText: response.statusText,
-    headers: Object.fromEntries(response.headers.entries()),
-    data: data
+  } catch (error) {
+    return {
+      status: '500',
+      statusText: 'Internal Server Error',
+      headers: {},
+      data: 'An error occurred.'
+    }
   }
 })
 
